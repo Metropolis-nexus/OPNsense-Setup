@@ -269,4 +269,6 @@ Install OPNsense as usual, note that:
 
 ## Use as Proxmox's DNS server
 
-Go to Proxmox -> Node Name -> System -> DNS. Set the DNS server as 192.168.1.1.
+Go to Proxmox -> Node Name -> System -> DNS
+- Set the primary DNS server as 192.168.1.1
+- Set 1.1.1.2 and 2606:4700:4700::1112
