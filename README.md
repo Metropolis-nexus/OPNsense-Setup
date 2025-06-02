@@ -267,6 +267,6 @@ Install OPNsense as usual, note that:
             - Help us improve ZenArmor -> Disable
             - Report Infrastructure Errors -> Disable
 
-# Use as Proxmox's DNS server
+## Use as Proxmox's DNS server
 
 Go to Proxmox -> Node Name -> System -> DNS. Set the DNS server as 192.168.1.1.
