@@ -1,8 +1,10 @@
 # OPNsense-Setup
 
+![Dashboard](Dashboard.png)
+
 ## Virtual bridge
 
-Node name -> Network -> Create a second virtual bridge with no IP address assigned in Proxmox
+Node name -> Network -> Create a second virtual bridge with IP address 192.168.1.2.
 
 ## Create OPNsense VM
 
@@ -37,7 +39,6 @@ Create OPNsense VM as usual, note that:
 Install OPNsense as usual, note that:
 - Use UHS as the filesystem, as the VM itself already runs inside of a ZVOL.
 - The default password for both the root and installer user is "opnsense".
-- Manually configure the ip address for the "LAN" interface after installation.
 
 ## Configure interfaces
 
@@ -105,6 +106,7 @@ Install OPNsense as usual, note that:
     - Uncheck "Enable legacy"
 
 - Interfaces -> LAN
+    - Set IP address as 192.168.1.1/24
     - Check "Block bogon networks"
 
 - Interfaces -> Virtual IPs
@@ -264,3 +266,7 @@ Install OPNsense as usual, note that:
         - Privacy
             - Help us improve ZenArmor -> Disable
             - Report Infrastructure Errors -> Disable
+
+# Use as Proxmox's DNS server
+
+Go to Proxmox -> Node Name -> System -> DNS. Set the DNS server as 192.168.1.1.
