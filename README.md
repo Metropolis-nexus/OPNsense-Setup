@@ -241,10 +241,6 @@ Install OPNsense as usual, note that:
             - hagezi Threat Inelligence Feeds
             - hagezi Gambling
             - OISD Domain Blocklist Ads
-    - DNS over TLS -> Add DNS servers
-        - IP addresses are 1.1.1.2, 1.0.0.2, 2606:4700:4700::1112, 2606:4700:4700::1002
-        - Enable forward first
-        - Verify CN with security.cloudflare-dns.com
 
 - Reporting
     - Settings
@@ -255,7 +251,7 @@ Install OPNsense as usual, note that:
 - ZenArmor
     - Go through the installation wizard
         - Use Elasticsearch 8
-        - Monitor the LAN interface (this will include any future VLANs), set security zone as "lan"
+        - Monitor the LAN interface, set security zone as "lan"
     - Policies -> Default
         - Security -> Enable all essential security except "Hacking" and "Firstly Seen Sites"
         - App Control -> Block "Ad Tracker" and "Ads"
