@@ -222,6 +222,7 @@ Install OPNsense as usual, note that:
         - Check "Prefetch DNS Key Support"
         - Check "Harden DNSSEC Data"
         - Check "Strict QNAME Minimisation"
+        - Check "Prefetch Support"
     - Blocklist
         - Check "Enable"
         - Type of DNSBL
