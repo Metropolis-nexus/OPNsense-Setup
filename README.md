@@ -155,6 +155,7 @@ Install OPNsense as usual, note that:
             - ET telemetry/emerging-imap
             - ET telemetry/emerging-inappropriate
             - ET telemetry/emerging-info
+            - ET telemetry/emerging-policy (Dubious policies blocking things like ipinfo.io)
             - ET telemetry/emerging-pop3
             - ET telemetry/emerging-smtp
             - ET telemetry/tor
