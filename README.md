@@ -20,17 +20,19 @@ Create OPNsense VM as usual, note that:
 
 ## Network & Firewalling
 
-- Node name -> Hardware -> Add a second network interface bridging to the new virtual bridge, uncheck "Firewall".
+- Node name -> Hardware -> Add a second network interface bridging to the new virtual bridge.
 
 ![net1](net1.png)
 
 - Node name -> Firewall -> IPset
     - Create ipfilter-net0 -> Add all public IP addresses OPNsense is supposed to handle (Basically, all public IPs except those of iDRAC and Proxmox).
-    - Create ipfilter-net1 -> Add 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, and fc00::/7.
+    - Create ipfilter-net1 -> 192.168.1.1.
 
 - Node name -> Firewall -> Add approprieate firewall rules
 
 ![Proxmox firewall](Proxmox-Firewall.png)
+
+**Note**: These firewall rules will stop VMs behind OPNsense from *initiating* any non TCP, UDP, and ICMP connections.
 
 - Firewall -> Options -> Enable Firewall, Router Advertisement, and IP filter
 
@@ -245,6 +247,8 @@ Install OPNsense as usual, note that:
             - hagezi Threat Inelligence Feeds
             - hagezi Gambling
             - OISD Domain Blocklist Ads
+    - DNS over TLS
+        - Add Cloudflare Gateway. Use `dig A your-endpoint.cloudflare-gateway.com` and `dig AAAA your-endpoint.cloudflare-gateway.com` to get the IP addresses to pin. Check `Forward first`.
 
 - Reporting
     - Settings
