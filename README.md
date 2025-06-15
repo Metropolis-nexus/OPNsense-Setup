@@ -171,7 +171,11 @@ Install OPNsense as usual, note that:
     - Check "NTS Client Support"
     - Allowed Networks -> Remove 0.opnsense.pool.ntp.org, add 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, and fc00::/7.
 
-- Services -> Dnsmasq DNS & DHCP 
+- Services -> CrowdSec
+    - Make sure Enable Log Processor, Enable LAPI, Enable Remediation, and Create Blocklist rules are all checked
+    - Enrollment key from https://app.crowdsec.net -> Enter key received from CrowdSec
+
+- Services -> Dnsmasq DNS & DHCP
     - Not actually gonna use this, but check "DNSSEC" anyways.
 
 - Services -> Intrusion Detection
@@ -274,6 +278,10 @@ Install OPNsense as usual, note that:
         - Privacy
             - Help us improve ZenArmor -> Disable
             - Report Infrastructure Errors -> Disable
+
+## CrowdSec & Suricata integration
+
+Follow [this guide](https://www.crowdsec.net/blog/crowdsec-and-suricata-integration).
 
 ## Use as Proxmox's DNS server
 
