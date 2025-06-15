@@ -4,7 +4,9 @@
 
 ## Virtual bridge
 
-Node name -> Network -> Create a second virtual bridge with IP address 192.168.1.2.
+Node name -> Network -> Create a second virtual bridge with IP address 192.168.1.2. Check on "VLAN aware".
+
+![Bridge](Bridge.png)
 
 ## Create OPNsense VM
 
@@ -26,7 +28,7 @@ Create OPNsense VM as usual, note that:
 
 - Node name -> Firewall -> IPset
     - Create ipfilter-net0 -> Add all public IP addresses OPNsense is supposed to handle (Basically, all public IPs except those of iDRAC and Proxmox).
-    - Create ipfilter-net1 -> 192.168.1.1.
+    - Create ipfilter-net1 -> 192.168.1.1, 192.168.2.1.
 
 - Node name -> Firewall -> Add approprieate firewall rules
 
@@ -39,7 +41,8 @@ Create OPNsense VM as usual, note that:
 ## OPNSense installation
 
 Install OPNsense as usual, note that:
-- Use UHS as the filesystem, as the VM itself already runs inside of a ZVOL.
+- Use UFS as the filesystem, as the VM itself already runs inside of a ZVOL.
+- Go without swap on SSD.
 - The default password for both the root and installer user is "opnsense".
 
 ## Configure interfaces
@@ -59,6 +62,7 @@ Install OPNsense as usual, note that:
         - os-chrony
         - os-crowdsec
         - os-etpro-telemetry
+        - os-intrusion-detection-content-et-open
         - os-qemu-guest-agent, os-sunnyvalley
         - os-theme-vincuna
     - Refresh plugins -> Install os-sensei
@@ -106,11 +110,29 @@ Install OPNsense as usual, note that:
     - Uncheck "Enable legacy"
 
 - Interfaces -> LAN
-    - Set IP address as 192.168.1.1/24
     - Check "Block bogon networks"
+    - Set IP address as 192.168.1.1/24
+
+- Interfaces -> Devices -> VLAN -> Add new VLAN
+    - Device -> vlan02
+    - Parent -> vtnet1 [LAN]
+    - VLAN tag -> 2
+
+- Interfaces -> Assignment
+    - Add vlan02 with description VLAN02
+
+- Interfaces -> VLAN02
+    - Check "Enable interface"
+    - Check "Block bogon networks"
+    - Set IP address as 192.168.2.1/24
 
 - Interfaces -> Virtual IPs
     - Add other WAN IPs (Except iDRAC, Proxmox, and OPNsense's own IP), deny service binding
+
+- Firewall -> Rules -> VLAN02 -> Add
+    - Action: Pass
+    - Direction: In
+    - TCP/IP Version: IPv4 + IPv6
 
 - Firewall -> NAT -> Port Forward -> New Rule
     - Interface: LAN
@@ -121,6 +143,15 @@ Install OPNsense as usual, note that:
     - Destination port range: from DNS to DNS
     - Redirect target IP: 127.0.0.1
     - Redirect target port: DNS
+
+- Firewall -> NAT -> Port Forward -> Clone the previous rule
+    - TCP/IP Version: IPv6
+    - Redirect target IP: ::1
+
+- Firewall -> NAT -> Port Forward -> Clone the previous rule
+    - Interface: VLAN02
+    - TCP/IP Version: IPv4
+    - Redirect target IP: 127.0.0.1
 
 - Firewall -> NAT -> Port Forward -> Clone the previous rule
     - TCP/IP Version: IPv6
@@ -145,27 +176,34 @@ Install OPNsense as usual, note that:
 
 - Services -> Intrusion Detection
     - Downloads
-        - Add snort_vrt.oinkcode and et_telemetry.token. Hit "Save".
-        - Enable all of the rules except:
-            - ET telemetry/emerging-chat
-            - ET telemetry/emerging-deleted
-            - ET telemetry/emerging-games
-            - ET telemetry/emerging-hunting
-            - ET telemetry/emerging-icmp_info
-            - ET telemetry/emerging-imap
-            - ET telemetry/emerging-inappropriate
-            - ET telemetry/emerging-info
-            - ET telemetry/emerging-policy (Dubious policies blocking things like ipinfo.io)
-            - ET telemetry/emerging-pop3
-            - ET telemetry/emerging-smtp
-            - ET telemetry/tor
-            - All OPNsense-App-detect rules
+        - Add et_telemetry.token. Hit "Save".
+        - Enable the following rules (we are mixing ET open and ET telemtry because of [this issue](os-intrusion-detection-content-et-open)):
+            - abuse.ch/SSL Fingerprint Blacklist
+            - abuse.ch/ThreatFox (Handles botnet traffic, which Zenarmor free does not)
+            - ET open/botcc
+            - ET open/botcc.portgrouped
+            - ET open/compromised
+            - ET open/dshield
+            - ET open/emerging-icmp
+            - ET open/emerging-shellcode
+            - ET telemetry/emerging-attack_response
+            - ET telemetry/emerging-coinminer
+            - ET telemetry/emerging-current_events
+            - ET telemetry/emerging-exploit
+            - ET telemetry/emerging-exploit_kit
+            - ET telemetry/emerging-p2p (Don't wanna get DMCAed here)
+            - ET telemetry/emerging-scan
+            - ET telemetry/emerging-web_server
+            - ET telemetry/emerging-web_specific_apps
         - Download and update rules
     - Settings
         - Check "Enabled"
         - IPS Mode -> Click on the link to go to advanced network and disable hardware offloading first, then check "IPS Mode"
-        - Interfaces -> Make sure only WAN is selected
+        - Check "Promiscuous mode"
         - Pattern Matcher -> Hyperscan
+        - Detect Profile -> High
+        - Interfaces -> LAN
+        - Home Networks -> Add fc00::/7
     - Policy -> Create new policy
         - Priority 0
         - Rulesets -> All
@@ -224,7 +262,7 @@ Install OPNsense as usual, note that:
 - ZenArmor
     - Go through the installation wizard
         - Use Elasticsearch 8
-        - Monitor the LAN interface, set security zone as "lan"
+        - Monitor the VLAN02 interface, set security zone as "lan"
     - Policies -> Default
         - Security -> Enable all essential security except "Hacking" and "Firstly Seen Sites"
         - App Control -> Block "Ad Tracker" and "Ads"
