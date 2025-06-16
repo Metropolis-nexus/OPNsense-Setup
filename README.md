@@ -174,6 +174,12 @@ Install OPNsense as usual, note that:
 - Services -> CrowdSec
     - Make sure Enable Log Processor, Enable LAPI, Enable Remediation, and Create Blocklist rules are all checked
     - Enrollment key from https://app.crowdsec.net -> Enter key received from CrowdSec
+    - Whitelist good actors (need shell access):
+
+```sh
+cscli collections install crowdsecurity/whitelist-good-actors
+cscli parsers install crowdsecurity/whitelists
+```
 
 - Services -> Dnsmasq DNS & DHCP
     - Not actually gonna use this, but check "DNSSEC" anyways.
@@ -197,7 +203,6 @@ Install OPNsense as usual, note that:
             - ET telemetry/emerging-p2p (Don't wanna get DMCAed here)
             - ET telemetry/emerging-scan
             - ET telemetry/emerging-web_server
-            - ET telemetry/emerging-web_specific_apps
         - Download and update rules
     - Settings
         - Check "Enabled"
@@ -278,10 +283,6 @@ Install OPNsense as usual, note that:
         - Privacy
             - Help us improve ZenArmor -> Disable
             - Report Infrastructure Errors -> Disable
-
-## CrowdSec & Suricata integration
-
-Follow [this guide](https://www.crowdsec.net/blog/crowdsec-and-suricata-integration).
 
 ## Use as Proxmox's DNS server
 
