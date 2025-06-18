@@ -83,6 +83,7 @@ Install OPNsense as usual, note that:
     - HTTP Strict Transport Security -> Enable
     - Primary Console -> Serial Console
     - Secondary Console -> VGA Console
+    - Uncheck "Password protect the console menu"
 
 - System -> Settings -> Cron
     - Add the following:
