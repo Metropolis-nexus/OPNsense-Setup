@@ -22,21 +22,23 @@ Create OPNsense VM as usual, note that:
 
 ## Network & Firewalling
 
-- Node name -> Hardware -> Add a second network interface bridging to the new virtual bridge.
+- VM name -> Hardware -> Add a second network interface bridging to the new virtual bridge.
 
 ![net1](net1.png)
 
-- Node name -> Firewall -> IPset
+- VM name -> Firewall -> IPset
     - Create ipfilter-net0 -> Add all public IP addresses OPNsense is supposed to handle (Basically, all public IPs except those of iDRAC and Proxmox).
     - Create ipfilter-net1 -> 192.168.1.1, 192.168.2.1.
 
-- Node name -> Firewall -> Add approprieate firewall rules
+- VM name -> Firewall -> Add approprieate firewall rules
 
 ![Proxmox firewall](Proxmox-Firewall.png)
 
 **Note**: These firewall rules will stop VMs behind OPNsense from *initiating* any non TCP, UDP, and ICMP connections.
 
-- Firewall -> Options -> Enable Firewall, Router Advertisement, and IP filter
+- VM Firewall -> Options
+    - Enable Firewall, Router Advertisement, and IP filter
+    - Disable DHCP
 
 ## OPNSense installation
 
