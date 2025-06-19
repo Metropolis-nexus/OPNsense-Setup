@@ -181,6 +181,7 @@ Install OPNsense as usual, note that:
 cscli collections install crowdsecurity/whitelist-good-actors
 cscli parsers install crowdsecurity/whitelists
 ```
+    - Check "Enable log for rules"
 
 - Services -> Dnsmasq DNS & DHCP
     - Not actually gonna use this, but check "DNSSEC" anyways.
