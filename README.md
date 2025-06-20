@@ -205,7 +205,6 @@ cscli parsers install crowdsecurity/whitelists
             - ET telemetry/emerging-exploit
             - ET telemetry/emerging-exploit_kit
             - ET telemetry/emerging-p2p (Don't wanna get DMCAed here)
-            - ET telemetry/emerging-scan
             - ET telemetry/emerging-web_server
         - Download and update rules
     - Settings
