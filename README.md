@@ -34,7 +34,7 @@ Create OPNsense VM as usual, note that:
 
 ![Proxmox firewall](Proxmox-Firewall.png)
 
-**Note**: These firewall rules will stop VMs behind OPNsense from *initiating* any non TCP, UDP, and ICMP connections.
+**Note**: These firewall rules will stop VMs behind OPNsense from *initiating* any non TCP, UDP, and Ping connections.
 
 - VM Firewall -> Options
     - Enable Firewall, Router Advertisement, and IP filter
