@@ -253,7 +253,6 @@ cscli parsers install crowdsecurity/whitelists
             - Blocklist.site Phishing
             - Blocklist.site Ransomware
             - Blocklist.site Scam
-            - Blocklist.site Tracking
             - EasyList
             - Easy Privacy
             - hagezi Fake-scams/fakes
@@ -267,8 +266,6 @@ cscli parsers install crowdsecurity/whitelists
 - Reporting
     - Settings
         - Unbound DNS reporting -> Check "Enables local gathering of statistics."
-    - Unbound DNS
-        - Wait a few minutes. Whitelist `api.ipify.org` if blocked. 
 
 - ZenArmor
     - Go through the installation wizard
