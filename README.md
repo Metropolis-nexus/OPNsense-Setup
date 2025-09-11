@@ -246,7 +246,6 @@ cscli parsers install crowdsecurity/whitelists
             - AdAway List
             - AdGuard List
             - Blocklist.site Abuse
-            - Blocklist.site Ads
             - Blocklist.site Fraud
             - Blocklist.site Gambling
             - Blocklist.site Malware
