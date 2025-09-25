@@ -130,7 +130,8 @@ Install OPNsense as usual, note that:
     - Set IP address as 192.168.2.1/24
 
 - Interfaces -> Virtual IPs
-    - Add other WAN IPs (Except iDRAC, Proxmox, and OPNsense's own IP), deny service binding
+    - Settings -> Add other WAN IPs (Except iDRAC, Proxmox, and OPNsense's own IP), deny service binding
+    - Status -> Temporarily Disable CARP
 
 - Firewall -> Rules -> VLAN02 -> Add
     - Action: Pass
