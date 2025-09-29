@@ -262,7 +262,10 @@ cscli parsers install crowdsecurity/whitelists
             - hagezi Gambling
             - OISD Domain Blocklist Ads
     - DNS over TLS
-        - Add Cloudflare Gateway. Use `dig A your-endpoint.cloudflare-gateway.com` and `dig AAAA your-endpoint.cloudflare-gateway.com` to get the IP addresses to pin. Check `Forward first`.
+        - Add Cloudflare Secure Gateway. Use `dig A your-endpoint.cloudflare-gateway.com` and `dig AAAA your-endpoint.cloudflare-gateway.com` to get the IP addresses to pin. Check `Forward first`.
+        - This is my current policies. Note that "parked domains" is not blocked because that category has false positives.
+
+![Clouflare Secure Gateway](/Cloudflare-Secure-Gateway.png)
 
 - Reporting
     - Settings
