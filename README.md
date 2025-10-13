@@ -276,7 +276,8 @@ cscli parsers install crowdsecurity/whitelists
         - Use Elasticsearch 8
         - Monitor the VLAN02 interface, set security zone as "lan"
     - Policies -> Default
-        - Security -> Enable "Malware/Virus" and "Phishing". I have previously run into false positives with "Spam sites, Potentially Dangerous", and "Parked Domains".
+        - Security -> Enable "Malware/Virus" and "Phishing". I have previously run into false positives with "Spam sites, Potentially Dangerous", and "Parked Domains"
+        - Content Inspection -> Change all options in "DNS Deep Inspection" to "Block"
         - App Control -> Block "Ad Tracker" and "Ads"
         - Exclusions -> Disable Feedbacks
     - Settings
