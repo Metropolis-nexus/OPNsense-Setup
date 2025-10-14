@@ -37,8 +37,10 @@ Create OPNsense VM as usual, note that:
 **Note**: These firewall rules will stop VMs behind OPNsense from *initiating* any non TCP, UDP, and ICMP connections. Do not use the Ping macro, as it will break ping from the VMs behind OPNsense.
 
 - VM Firewall -> Options
-    - Enable Firewall, Router Advertisement, and IP filter
+    - Enable Router Advertisement and IP filter
     - Disable DHCP
+
+⚠️ `proxmox-firewall` 1.2.0 seems to break port forwarding if firewalling is enabled for the OPNsense VM, so keep it disabled for now.
 
 ## OPNSense installation
 
