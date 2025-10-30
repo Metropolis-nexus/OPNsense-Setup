@@ -28,7 +28,7 @@ Create OPNsense VM as usual, note that:
 
 - VM name -> Firewall -> IPset
     - Create ipfilter-net0 -> Add all public IP addresses OPNsense is supposed to handle (Basically, all public IPs except those of iDRAC and Proxmox).
-    - Create ipfilter-net1 -> 192.168.1.1, 192.168.2.1.
+    - Create ipfilter-net1 -> 192.168.1.1, 192.168.2.1, 192.168.3.1.
 
 - VM name -> Firewall -> Add approprieate firewall rules
 
@@ -123,19 +123,38 @@ Install OPNsense as usual, note that:
     - Parent -> vtnet1 [LAN]
     - VLAN tag -> 2
 
+- Interfaces -> Devices -> VLAN -> Add new VLAN
+    - Device -> vlan03
+    - Parent -> vtnet1 [LAN]
+    - VLAN tag -> 3
+
+
 - Interfaces -> Assignment
     - Add vlan02 with description VLAN02
+
+- Interfaces -> Assignment
+    - Add vlan03 with description VLAN03
 
 - Interfaces -> VLAN02
     - Check "Enable interface"
     - Check "Block bogon networks"
     - Set IP address as 192.168.2.1/24
 
+- Interfaces -> VLAN03
+    - Check "Enable interface"
+    - Check "Block bogon networks"
+    - Set IP address as 192.168.3.1/24
+
 - Interfaces -> Virtual IPs
     - Settings -> Add other WAN IPs (Except iDRAC, Proxmox, and OPNsense's own IP), deny service binding
     - Status -> Temporarily Disable CARP
 
 - Firewall -> Rules -> VLAN02 -> Add
+    - Action: Pass
+    - Direction: In
+    - TCP/IP Version: IPv4 + IPv6
+
+- Firewall -> Rules -> VLAN03 -> Add
     - Action: Pass
     - Direction: In
     - TCP/IP Version: IPv4 + IPv6
@@ -160,6 +179,17 @@ Install OPNsense as usual, note that:
     - Redirect target IP: 127.0.0.1
 
 - Firewall -> NAT -> Port Forward -> Clone the previous rule
+    - Interface: VLAN02
+    - TCP/IP Version: IPv6
+    - Redirect target IP: ::1
+
+- Firewall -> NAT -> Port Forward -> Clone the previous rule
+    - Interface: VLAN03
+    - TCP/IP Version: IPv4
+    - Redirect target IP: 127.0.0.1
+
+- Firewall -> NAT -> Port Forward -> Clone the previous rule
+    - Interface: VLAN03
     - TCP/IP Version: IPv6
     - Redirect target IP: ::1
 
@@ -278,7 +308,7 @@ cscli parsers install crowdsecurity/whitelists
         - Use Elasticsearch 8
         - Monitor the VLAN02 interface, set security zone as "lan"
     - Policies -> Default
-        - Security -> Enable "Malware/Virus" and "Phishing". I have previously run into false positives with "Spam sites, Potentially Dangerous", and "Parked Domains"
+        - Security -> Enable "Malware/Virus", "Phishing", "Hacking", "Spam sites", "Potentially Dangerous". I have previously run into false positives with "Parked Domains".
         - Content Inspection -> Change all options in "DNS Deep Inspection" to "Block"
         - App Control -> Block "Ad Tracker" and "Ads"
         - Exclusions -> Disable Feedbacks
