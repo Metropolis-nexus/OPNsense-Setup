@@ -277,7 +277,6 @@ cscli parsers install crowdsecurity/whitelists
         - Check "Enable"
         - Type of DNSBL
             - Abuse.ch Threatfox IOC Database
-            - AdAway List
             - AdGuard List
             - Blocklist.site Abuse
             - Blocklist.site Fraud
