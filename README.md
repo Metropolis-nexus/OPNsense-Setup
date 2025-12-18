@@ -40,8 +40,6 @@ Create OPNsense VM as usual, note that:
     - Enable Router Advertisement and IP filter
     - Disable DHCP
 
-⚠️ `proxmox-firewall` 1.2.0 seems to break port forwarding if the firewall is enabled for OPNsense, so keep it disabled for now.
-
 ## OPNSense installation
 
 Install OPNsense as usual, note that:
