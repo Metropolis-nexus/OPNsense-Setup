@@ -4,7 +4,8 @@
 
 ## Virtual bridge
 
-Node name -> Network -> Create a second virtual bridge with IP address 192.168.1.2. Check on "VLAN aware".
+Node name -> Network -> Create a second virtual bridge named vmbr1 with IP address 192.168.1.2. Check on "VLAN aware".
+Node name -> Network -> Create a third virtual bridge named vmbr2 with no IP address. This bridge will not be connected to OPNsense, it is for other VMs to communicate without OPNsense being able to spoof their IP addresses.
 
 ![Bridge](Bridge.png)
 
@@ -22,7 +23,7 @@ Create OPNsense VM as usual, note that:
 
 ## Network & Firewalling
 
-- VM name -> Hardware -> Add a second network interface bridging to the new virtual bridge.
+- VM name -> Hardware -> Add a second network interface bridging to vmbr1.
 
 ![net1](net1.png)
 
