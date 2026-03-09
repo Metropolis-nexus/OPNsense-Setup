@@ -30,15 +30,10 @@ Create OPNsense VM as usual, note that:
     - Create ipfilter-net0 -> Add all public IP addresses OPNsense is supposed to handle (Basically, all public IPs except those of iDRAC and Proxmox).
     - Create ipfilter-net1 -> 192.168.1.1, 192.168.2.1, 192.168.3.1.
 
-- VM name -> Firewall -> Add approprieate firewall rules
-
-![Proxmox firewall](Proxmox-Firewall.png)
-
-**Note**: These firewall rules will stop VMs behind OPNsense from *initiating* any non TCP, UDP, and ICMP connections. Do not use the Ping macro, as it will break ping from the VMs behind OPNsense.
-
 - VM Firewall -> Options
-    - Enable Firewall, Router Advertisement and IP filter
+    - Enable Router Advertisement and IP filter
     - Disable DHCP
+    - Leave Firewall disabled (the firewall does not actually work on this VM at the moment - we need Proxmox to add independent control for the FORWARD chain before we can turn it on)
 
 ## OPNSense installation
 
