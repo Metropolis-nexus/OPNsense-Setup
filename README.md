@@ -143,49 +143,48 @@ Install OPNsense as usual, note that:
     - Settings -> Add other WAN IPs (Except iDRAC, Proxmox, and OPNsense's own IP), deny service binding
     - Status -> Temporarily Disable CARP
 
-- Firewall -> Rules -> VLAN02 -> Add
+- Firewall -> Rules [new] -> Add
+    - Interface: VLAN02
     - Action: Pass
     - Direction: In
     - TCP/IP Version: IPv4 + IPv6
 
-- Firewall -> Rules -> VLAN03 -> Add
+- Firewall -> Rules [new] -> Add
+    - Interface: VLAN03
     - Action: Pass
     - Direction: In
     - TCP/IP Version: IPv4 + IPv6
 
-- Firewall -> NAT -> Port Forward -> New Rule
+- Firewall -> NAT -> Destination NAT -> New Rule
     - Interface: LAN
     - TCP/IP Version: IPv4
     - Protocol: TCP/UDP
+    - Source address: LAN net
     - Check "Destination / Invert"
     - Destination: LAN address
     - Destination port range: from DNS to DNS
     - Redirect target IP: 127.0.0.1
     - Redirect target port: DNS
 
-- Firewall -> NAT -> Port Forward -> Clone the previous rule
+- Firewall -> NAT -> Destination NAT -> Clone the previous rule
     - TCP/IP Version: IPv6
     - Redirect target IP: ::1
 
-- Firewall -> NAT -> Port Forward -> Clone the previous rule
+- Firewall -> NAT -> Destination NAT  -> Clone the previous rule
     - Interface: VLAN02
+    - Source address: VLAN02 net
     - TCP/IP Version: IPv4
-    - Redirect target IP: 127.0.0.1
 
-- Firewall -> NAT -> Port Forward -> Clone the previous rule
-    - Interface: VLAN02
+- Firewall -> NAT -> Destination NAT  -> Clone the previous rule
     - TCP/IP Version: IPv6
-    - Redirect target IP: ::1
 
-- Firewall -> NAT -> Port Forward -> Clone the previous rule
+- Firewall -> NAT -> Destination NAT  -> Clone the previous rule
     - Interface: VLAN03
+    - Source address: VLAN03 net
     - TCP/IP Version: IPv4
-    - Redirect target IP: 127.0.0.1
 
-- Firewall -> NAT -> Port Forward -> Clone the previous rule
-    - Interface: VLAN03
+- Firewall -> NAT -> Destination NAT  -> Clone the previous rule
     - TCP/IP Version: IPv6
-    - Redirect target IP: ::1
 
 - Firewall -> Settings
     - Advanced
