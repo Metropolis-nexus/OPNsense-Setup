@@ -188,9 +188,6 @@ Install OPNsense as usual, note that:
 
 - Firewall -> Settings
     - Advanced
-        - Check "Reflection for port forwards"
-        - Check "Reflection for 1:1"
-        - Check "Automatic outbout NAT for reflection"
         - Bogon Networks -> Update Frequency -> Daily
         - Check "Disable administration anti-lockout rule"
         - Check "Verify HTTPS certificates when downloading alias URLs"
