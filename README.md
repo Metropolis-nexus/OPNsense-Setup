@@ -190,6 +190,7 @@ Install OPNsense as usual, note that:
     - Advanced
         - Bogon Networks -> Update Frequency -> Daily
         - Check "Disable administration anti-lockout rule"
+        - Check "Disable reply-to on WAN rules"
         - Check "Verify HTTPS certificates when downloading alias URLs"
         - **Notes:** Do NOT enable syncookies, it breaks connections to certain services
 
