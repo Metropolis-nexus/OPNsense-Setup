@@ -55,14 +55,17 @@ Install OPNsense as usual, note that:
 
 - System -> Firmware
     - Updates -> Check for updates
-    - Plugins -> Install the following (skip os-intrusion-detection-content-ptopen and os-intrusion-detection-content-snort-vrt - the rulesets are not maintained):
-        - os-acme-client
-        - os-chrony
-        - os-crowdsec
-        - os-etpro-telemetry
-        - os-intrusion-detection-content-et-open
-        - os-qemu-guest-agent, os-sunnyvalley
-        - os-theme-vincuna
+    - Plugins 
+        - Install the following (skip os-intrusion-detection-content-ptopen and os-intrusion-detection-content-snort-vrt - the rulesets are not maintained):
+            - os-acme-client
+            - os-chrony
+            - os-crowdsec
+            - os-etpro-telemetry
+            - os-intrusion-detection-content-et-open
+            - os-qemu-guest-agent, os-sunnyvalley
+            - os-theme-vincuna
+        - Remove the following:
+            - os-isc-dhcp
     - Refresh plugins -> Install os-sensei
     - Reboot
 
@@ -165,6 +168,7 @@ Install OPNsense as usual, note that:
     - Destination port range: from DNS to DNS
     - Redirect target IP: 127.0.0.1
     - Redirect target port: DNS
+    - Firewall rule: Register rule
 
 - Firewall -> NAT -> Destination NAT -> Clone the previous rule
     - TCP/IP Version: IPv6
