@@ -62,7 +62,9 @@ Install OPNsense as usual, note that:
             - os-crowdsec
             - os-etpro-telemetry
             - os-intrusion-detection-content-et-open
-            - os-qemu-guest-agent, os-sunnyvalley
+            - os-q-feeds-connector
+            - os-qemu-guest-agent
+            - os-sunnyvalley
             - os-theme-vincuna
         - Remove the following:
             - os-isc-dhcp
@@ -271,22 +273,17 @@ cscli parsers install crowdsecurity/whitelists
     - Blocklist
         - Check "Enable"
         - Type of DNSBL
-            - Abuse.ch Threatfox IOC Database
-            - AdGuard List
-            - Blocklist.site Abuse
-            - Blocklist.site Fraud
-            - Blocklist.site Gambling
-            - Blocklist.site Malware
-            - Blocklist.site Phishing
-            - Blocklist.site Ransomware
-            - Blocklist.site Scam
-            - EasyList
-            - Easy Privacy
-            - hagezi Fake-scams/fakes
-            - hagezi Pop-Up Ads
-            - hagezi Threat Inelligence Feeds
-            - hagezi Gambling
-            - OISD Domain Blocklist Ads
+            - General Blocklists
+                - Abuse.ch Threatfox IOC Database
+                - AdGuard List
+                - EasyList
+                - Easy Privacy
+            - OSID Blocklists
+                - Big Blocklist
+            - hagezi Targeted List
+                - Fake - scams/fakes
+                - Pop-Up Ads
+                - Gambling
     - DNS over TLS
         - Add Cloudflare Secure Gateway. Use `dig A your-endpoint.cloudflare-gateway.com` and `dig AAAA your-endpoint.cloudflare-gateway.com` to get the IP addresses to pin. Check `Forward first`.
         - This is my current policies. Note that "parked domains" is not blocked because that category has false positives.
@@ -314,6 +311,32 @@ cscli parsers install crowdsecurity/whitelists
         - Privacy
             - Help us improve ZenArmor -> Disable
             - Report Infrastructure Errors -> Disable
+
+## Q-Feeds
+
+- Security -> Q-Feeds Connect
+    - Settings 
+        - Add API Key
+        - Check "Register domain feeds"
+    - Feeds -> Apply Malicious IP addresses and Malicious domain names
+
+- Firewall -> Rules [new] -> Add
+    - Interface: WAN
+    - Action: Block
+    - Direction: In
+    - Version: Any
+    - Source: `__qfeeds_malware_ip`
+    - Log: Checked
+    - Move rule above all other WAN rules
+
+- Firewall -> Rules [new] -> Add
+    - Interface: VLAN02, VLAN03, VLAN04
+    - Action: Block
+    - Direction: In
+    - Version: Any
+    - Destination: `__qfeeds_malware_ip`
+    - Log: Checked
+    - Move rule above all other floating rules
 
 ## Use as Proxmox's DNS server
 
