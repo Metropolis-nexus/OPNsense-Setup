@@ -59,7 +59,6 @@ Install OPNsense as usual, note that:
         - Install the following (skip os-intrusion-detection-content-ptopen and os-intrusion-detection-content-snort-vrt - the rulesets are not maintained):
             - os-acme-client
             - os-chrony
-            - os-crowdsec
             - os-etpro-telemetry
             - os-intrusion-detection-content-et-open
             - os-q-feeds-connector
@@ -204,17 +203,6 @@ Install OPNsense as usual, note that:
     - Check "Enable"
     - Check "NTS Client Support"
     - Allowed Networks -> Remove 0.opnsense.pool.ntp.org, add 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, and fc00::/7.
-
-- Services -> CrowdSec
-    - Make sure Enable Log Processor, Enable LAPI, Enable Remediation, and Create Blocklist rules are all checked
-    - Enrollment key from https://app.crowdsec.net -> Enter key received from CrowdSec
-    - Whitelist good actors (need shell access):
-
-```sh
-cscli collections install crowdsecurity/whitelist-good-actors
-cscli parsers install crowdsecurity/whitelists
-```
-    - Check "Enable log for rules"
 
 - Services -> Dnsmasq DNS & DHCP
     - Not actually gonna use this, but check "DNSSEC" anyways.
