@@ -223,7 +223,6 @@ Install OPNsense as usual, note that:
             - ET telemetry/emerging-current_events
             - ET telemetry/emerging-exploit
             - ET telemetry/emerging-exploit_kit
-            - ET telemetry/emerging-p2p (Don't wanna get DMCAed here)
             - ET telemetry/emerging-web_server
         - Download and update rules
     - Settings
@@ -318,7 +317,7 @@ Install OPNsense as usual, note that:
     - Move rule above all other WAN rules
 
 - Firewall -> Rules [new] -> Add
-    - Interface: VLAN02, VLAN03, VLAN04
+    - Interface: VLAN02, VLAN03
     - Action: Block
     - Direction: In
     - Version: Any
